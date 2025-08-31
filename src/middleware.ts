@@ -1,31 +1,49 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token");
+export async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+  const publicRoutes = ["/login", "/signup", "/"];
 
-  // 🚀 Always redirect away from "/"
-  if (req.nextUrl.pathname === "/") {
-    if (token) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
-    } else {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
+  if (
+    path.startsWith("/_next") ||
+    path.startsWith("/api") ||
+    path.includes(".")
+  ) {
+    return NextResponse.next();
   }
 
-  // 🚀 Protect dashboard & profile
+  const token = req.cookies.get("token")?.value;
+
+  if (!token && !publicRoutes.includes(path)) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
   if (!token) {
-    if (
-      req.nextUrl.pathname.startsWith("/dashboard") ||
-      req.nextUrl.pathname.startsWith("/profile")
-    ) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  try {
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    );
+
+    if (!payload.sellerId && !publicRoutes.includes(path)) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
+    if (payload.sellerId && publicRoutes.includes(path)) {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    return NextResponse.json({ message: "Some thing went wrong" });
+  }
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/profile/:path*"],
+  matcher: ["/", "/dashboard/:path*", "/login"],
 };

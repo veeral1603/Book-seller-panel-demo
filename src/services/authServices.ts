@@ -53,9 +53,14 @@ export const getCurrentUser = async () => {
     const response = await axios.get("/api/auth/me", {
       withCredentials: true,
     });
+
     return response.data;
   } catch (err: unknown) {
     const error = err as AxiosError<{ message: string }>;
+    if (error.response?.status === 401) {
+      return { success: false, data: null };
+    }
+
     if (error?.response?.data) {
       throw new Error(error.response.data.message);
     }

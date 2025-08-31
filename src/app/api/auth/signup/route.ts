@@ -45,7 +45,11 @@ export async function POST(request: NextRequest) {
     });
 
     const token = jwt.sign(
-      { sellerId: seller.id, sellerEmail: seller.email },
+      {
+        sellerId: seller.id,
+        sellerEmail: seller.email,
+        sellerName: seller.name,
+      },
       JWT_SECRET,
       {
         expiresIn: "7d",

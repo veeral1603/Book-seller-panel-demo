@@ -41,9 +41,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = jwt.sign({ ...seller, password: "_" }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      {
+        sellerId: seller.id,
+        sellerEmail: seller.email,
+        sellerName: seller.name,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     const res = NextResponse.json(
       {
