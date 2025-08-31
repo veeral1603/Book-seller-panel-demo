@@ -25,9 +25,7 @@ export default function RootLayout({
       <UserProvider>
         <body className={`${inter.className} antialiased`}>
           <Toaster position="top-right" reverseOrder={false} />
-          <main className="min-h-screen flex items-center justify-center">
-            {children}
-          </main>
+          {children}
         </body>
       </UserProvider>
     </html>

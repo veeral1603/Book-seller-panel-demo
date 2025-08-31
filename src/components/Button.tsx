@@ -1,6 +1,6 @@
 import React from "react";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "unstyled";
 type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
@@ -13,6 +13,7 @@ type ButtonProps = {
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-black text-white",
   secondary: "bg-stone-200 text-foreground",
+  unstyled: "bg-transparent text-foreground",
 };
 
 export default function Button({
@@ -23,6 +24,18 @@ export default function Button({
   variant,
   className,
 }: ButtonProps) {
+  if (variant === "unstyled")
+    return (
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        type={type}
+        className={`${className} cursor-pointer disabled:opacity-60 flex justify-center items-center gap-2`}
+      >
+        {children}
+      </button>
+    );
+
   return (
     <button
       onClick={onClick}

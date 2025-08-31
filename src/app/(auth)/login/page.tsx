@@ -11,6 +11,7 @@ import { login } from "@/services/authServices";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function LoginPage() {
   const {
@@ -31,7 +32,7 @@ export default function LoginPage() {
 
       if (result.success) {
         toast.success(result.message);
-        router.replace("/dashboard");
+        router.replace("/dashboard/listings");
       } else {
         throw new Error(result.message);
       }
@@ -45,7 +46,10 @@ export default function LoginPage() {
   return (
     <div className="h-full">
       <div className="p-4 md:p-6 rounded-md shadow-sm bg-white border border-stone-200 flex items-center flex-col  min-w-sm ">
-        <div className="text-center text-2xl font-medium">
+        <div>
+          <Image src={"/logo.webp"} alt="logo" width={200} height={30} />
+        </div>
+        <div className="text-center text-2xl font-medium mt-2">
           <h2>Login to seller panel</h2>
         </div>
 

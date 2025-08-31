@@ -10,6 +10,7 @@ import Spinner from "@/components/Spinner";
 import toast from "react-hot-toast";
 import { signup } from "@/services/authServices";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SignupPage() {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -30,7 +31,7 @@ export default function SignupPage() {
 
       if (result.success) {
         toast.success(result.message);
-        router.replace("/dashboard");
+        router.replace("/dashboard/listings");
       } else {
         throw new Error(result.message);
       }
@@ -48,7 +49,10 @@ export default function SignupPage() {
   return (
     <div className="h-full">
       <div className="p-4 md:p-6 rounded-md shadow-sm bg-white border border-stone-200 flex items-center flex-col  min-w-sm ">
-        <div className="text-center text-2xl font-medium">
+        <div>
+          <Image src={"/logo.webp"} alt="logo" width={200} height={30} />
+        </div>
+        <div className="text-center text-2xl font-medium mt-2">
           <h2>Create an Account</h2>
         </div>
 
