@@ -11,10 +11,13 @@ import toast from "react-hot-toast";
 import { signup } from "@/services/authServices";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import useUser from "@/hooks/useUser";
 
 export default function SignupPage() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const router = useRouter();
+
+  const { fetchUser } = useUser();
 
   const {
     register,
@@ -32,6 +35,7 @@ export default function SignupPage() {
       if (result.success) {
         toast.success(result.message);
         router.replace("/dashboard/listings");
+        fetchUser();
       } else {
         throw new Error(result.message);
       }
@@ -131,7 +135,7 @@ export default function SignupPage() {
             </InputWrapper>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Spinner /> : "Sign Up"}
+              {loading ? <Spinner className="!size-5" /> : "Sign Up"}
             </Button>
 
             <div className="text-sm ">

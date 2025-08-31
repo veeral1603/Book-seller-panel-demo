@@ -9,3 +9,9 @@ export type SignupType = {
   password: string;
   confirmPassword?: string;
 };
+
+export type JWTType = {
+  sellerId: string;
+  sellerEmail: string;
+  sellerName: string;
+};

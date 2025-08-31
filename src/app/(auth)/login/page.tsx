@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import useUser from "@/hooks/useUser";
 
 export default function LoginPage() {
   const {
@@ -23,6 +24,8 @@ export default function LoginPage() {
   const [isPasswordShown, setIsPasswordShown] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  const { fetchUser } = useUser();
+
   const router = useRouter();
 
   const onSubmit = async (data: LoginType) => {
@@ -33,6 +36,7 @@ export default function LoginPage() {
       if (result.success) {
         toast.success(result.message);
         router.replace("/dashboard/listings");
+        fetchUser();
       } else {
         throw new Error(result.message);
       }
@@ -87,7 +91,7 @@ export default function LoginPage() {
             </InputWrapper>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Spinner /> : "Login"}
+              {loading ? <Spinner className="!size-5" /> : "Login"}
             </Button>
 
             <div className="text-sm ">

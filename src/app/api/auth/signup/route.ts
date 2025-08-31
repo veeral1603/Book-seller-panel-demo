@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { createJWT } from "@/lib/jwt";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -44,17 +44,11 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const token = jwt.sign(
-      {
-        sellerId: seller.id,
-        sellerEmail: seller.email,
-        sellerName: seller.name,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
+    const token = await createJWT({
+      sellerId: seller.id,
+      sellerEmail: seller.email,
+      sellerName: seller.name,
+    });
 
     const res = NextResponse.json(
       {

@@ -26,3 +26,7 @@ body {
 input {
   @apply outline-none text-sm;
 }
+
+.container {
+  @apply max-w-4xl mx-auto;
+}

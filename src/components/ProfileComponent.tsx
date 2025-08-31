@@ -9,7 +9,7 @@ import { logout } from "@/services/authServices";
 import { useRouter } from "next/navigation";
 
 export default function ProfileComponent() {
-  const { loading, user } = useUser();
+  const { loading, user, fetchUser } = useUser();
   const [dropDownOpen, setDropdownOpen] = React.useState<boolean>(false);
   const [loggingOut, setLoggingOut] = React.useState<boolean>(false);
 
@@ -46,6 +46,7 @@ export default function ProfileComponent() {
       if (result.success) {
         toast.success(result.message);
         router.replace("/login");
+        fetchUser();
       } else {
         throw new Error(result.message);
       }

@@ -5,7 +5,7 @@ import React from "react";
 
 const pageheading: Record<string, string> = {
   "/dashboard/listings": "Listings",
-  "/dashboard/new-listing": "New Listing",
+  "/dashboard/listings/new": "New Listing",
   "/dashboard/sales": "Sales",
   "/dashboard/profile": "My Profile",
 };
