@@ -1,5 +1,6 @@
 "use client";
 import ListingCard from "@/components/ListingCard";
+import Spinner from "@/components/Spinner";
 import { getListings } from "@/services/ListingService";
 import { ListingType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +17,7 @@ export default function ListingsPage() {
 
   return (
     <div className="container flex flex-col gap-4 md:gap-6">
-      {isFetching && <p>Loading...</p>}
+      {isFetching && <Spinner className="!text-black mx-auto !size-8" />}
       {!isFetching && data && data.length === 0 && <p>No listings found.</p>}
       {!isFetching && data && data.length > 0 && (
         <div className="gap-4 md:gap-6 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">

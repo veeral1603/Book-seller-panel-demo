@@ -25,7 +25,7 @@ export default function ListingForm() {
     mutationFn: async (data: ListingType) => createListing(data),
     onSuccess: () => {
       toast.success("Listing created successfully.");
-      // queryClient.invalidateQueries(["listings"]);
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
       reset();
     },
     onError: (error: Error) => toast.error(error.message),
