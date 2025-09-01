@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { verifyJWT } from "@/lib/jwt";
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "") as {
+    const decoded = (await verifyJWT(token)) as {
       sellerId: string;
     };
 
