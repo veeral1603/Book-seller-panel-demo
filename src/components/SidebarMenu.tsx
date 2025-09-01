@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IndianRupee, ListCheck, Plus, User } from "lucide-react";
+import { useNavbar } from "@/hooks/useNavbar";
 
 const menuItems = [
   {
@@ -21,6 +22,7 @@ const menuItems = [
 
 export default function SidebarMenu() {
   const pathName = usePathname();
+  const { closeNavbar } = useNavbar();
   return (
     <ul className="flex flex-col text-sm space-y-2">
       {menuItems.map((item) => (
@@ -31,6 +33,7 @@ export default function SidebarMenu() {
               ? "bg-black text-white font-medium"
               : "hover:bg-stone-50"
           }`}
+          onClick={closeNavbar}
         >
           <Link
             href={item.href}
