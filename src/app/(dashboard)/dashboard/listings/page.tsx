@@ -13,8 +13,6 @@ export default function ListingsPage() {
     staleTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
-
   return (
     <div className="container flex flex-col gap-4 md:gap-6">
       {isFetching && <Spinner className="!text-black mx-auto !size-8" />}

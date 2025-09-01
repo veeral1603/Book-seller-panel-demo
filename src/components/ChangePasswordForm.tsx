@@ -4,18 +4,47 @@ import InputWrapper from "./InputWrapper";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
 import Button from "./Button";
+import { useMutation } from "@tanstack/react-query";
+import { changePassword } from "@/services/authServices";
+import toast from "react-hot-toast";
+import Spinner from "./Spinner";
+
+export type changePasswordType = {
+  password: string;
+  newPassword: string;
+};
 
 export default function ChangePasswordForm() {
   const [isPasswordShown, setIsPasswordShown] = React.useState<boolean>(false);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: changePasswordType) => {
+      await changePassword(data);
+    },
+    onSuccess: () => {
+      toast.success("Password changed successfully");
+      reset();
+    },
+    onError: (error: Error) => {
+      console.error(error.message);
+      toast.error("Failed to change password");
+    },
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    watch,
+    reset,
+  } = useForm<changePasswordType>();
+
+  const onSubmit = (data: changePasswordType) => {
+    mutate(data);
+  };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <header>
           <h5 className="text-lg ">Change Password</h5>
@@ -56,6 +85,16 @@ export default function ChangePasswordForm() {
                   value: 8,
                   message: "Password must be at least 8 characters long",
                 },
+                validate: (value) => {
+                  if (value == watch("password")) {
+                    toast.error(
+                      "New password must be different from current password"
+                    );
+                    return false;
+                  }
+
+                  return true;
+                },
               })}
             />
 
@@ -68,7 +107,13 @@ export default function ChangePasswordForm() {
             </button>
           </InputWrapper>
 
-          <Button type="submit">Change Password</Button>
+          <Button className="min-w-30" type="submit">
+            {isPending ? (
+              <Spinner className="!size-5 mx-auto" />
+            ) : (
+              "Change Password"
+            )}
+          </Button>
         </div>
       </div>
     </form>

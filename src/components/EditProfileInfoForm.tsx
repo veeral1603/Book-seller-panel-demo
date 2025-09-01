@@ -15,7 +15,6 @@ export type FormData = {
 };
 
 export default function EditProfileInfoForm({ data }: { data: FormData }) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { fetchUser } = useUser();
   const {
     handleSubmit,
@@ -26,19 +25,16 @@ export default function EditProfileInfoForm({ data }: { data: FormData }) {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
-      setIsLoading(true);
       await updateProfile(data);
     },
     onSuccess: () => {
-      setIsLoading(false);
       toast.success("Profile updated successfully");
       fetchUser();
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (error: Error) => {
-      setIsLoading(false);
       console.error(error.message);
       toast.error("Failed to update profile");
     },
@@ -94,7 +90,7 @@ export default function EditProfileInfoForm({ data }: { data: FormData }) {
           </InputWrapper>
 
           <Button variant="primary" type="submit" className="min-w-30">
-            {isLoading ? <Spinner className="!size-5" /> : "Save Changes"}
+            {isPending ? <Spinner className="!size-5" /> : "Save Changes"}
           </Button>
         </div>
       </div>
