@@ -10,7 +10,7 @@ import {
 } from "@/lib/sales";
 import { getSalesData } from "@/services/SalesServices";
 import { useQuery } from "@tanstack/react-query";
-import { IndianRupee } from "lucide-react";
+import { IndianRupee, ShoppingCart } from "lucide-react";
 import React from "react";
 
 export default function SalesPage() {
@@ -37,7 +37,7 @@ export default function SalesPage() {
 
             <SalesCard
               label="Total Sales"
-              icon={<IndianRupee size={16} />}
+              icon={<ShoppingCart size={16} />}
               value={`${getTotalSales(data)} Books`}
             />
 
