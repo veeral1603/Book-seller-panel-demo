@@ -7,11 +7,14 @@ import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import { logout } from "@/services/authServices";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProfileComponent() {
   const { loading, user, fetchUser } = useUser();
   const [dropDownOpen, setDropdownOpen] = React.useState<boolean>(false);
   const [loggingOut, setLoggingOut] = React.useState<boolean>(false);
+
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -45,6 +48,7 @@ export default function ProfileComponent() {
 
       if (result.success) {
         toast.success(result.message);
+        queryClient.clear();
         router.replace("/login");
         fetchUser();
       } else {

@@ -7,7 +7,7 @@ type ListingCardProps = {
 
 export default function ListingCard({ book }: ListingCardProps) {
   return (
-    <article className="mb-6 rounded-2xl bg-white  ring-1 ring-black/5 overflow-hidden cursor-pointer group hover:shadow-sm transition-shadow duration-300">
+    <article className="mb-6 rounded-lg bg-white  ring-1 ring-black/5 overflow-hidden cursor-pointer group hover:shadow-sm transition-shadow duration-300">
       {/* card Image */}
       <div className="h-64 md:h-70 lg:h-86 overflow-hidden">
         <img
