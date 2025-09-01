@@ -10,7 +10,7 @@ export default function Header() {
     <div className="px-4 py-2.5 border-b border-stone-200 flex items-center justify-between">
       {/* Mobile Header Items  */}
       <div className="flex items-center gap-3">
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <Button variant="unstyled">
             <Menu strokeWidth={2} size={20} />
           </Button>

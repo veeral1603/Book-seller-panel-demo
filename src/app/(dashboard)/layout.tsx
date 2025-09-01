@@ -13,7 +13,7 @@ export default function DashboardLayout({
 
       <div className="relative flex max-h-screen flex-col overflow-hidden">
         <Header />
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 bg-stone-50 overflow-y-auto">
           <main className="font-poppins h-full px-4 py-4 md:p-4">
             {children}
           </main>

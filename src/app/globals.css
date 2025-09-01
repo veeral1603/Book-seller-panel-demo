@@ -23,10 +23,11 @@ body {
   color: var(--foreground);
 }
 
-input {
+input,
+textarea {
   @apply outline-none text-sm;
 }
 
 .container {
-  @apply max-w-4xl mx-auto;
+  @apply max-w-5xl mx-auto;
 }

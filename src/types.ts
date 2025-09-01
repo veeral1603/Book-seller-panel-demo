@@ -15,3 +15,11 @@ export type JWTType = {
   sellerEmail: string;
   sellerName: string;
 };
+
+export type ListingType = {
+  imageUrl: string;
+  title: string;
+  description?: string;
+  price: number;
+  stock: number;
+};

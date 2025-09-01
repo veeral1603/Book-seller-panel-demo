@@ -56,7 +56,10 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
 
-    res.cookies.set("token", token, { httpOnly: true });
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    });
 
     return res;
   } catch (error) {
