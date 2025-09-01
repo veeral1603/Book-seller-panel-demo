@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createListing } from "@/services/ListingService";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
+import { useRouter } from "next/navigation";
 
 export default function ListingForm() {
   const {
@@ -19,6 +20,8 @@ export default function ListingForm() {
     reset,
   } = useForm<ListingType>();
 
+  const router = useRouter();
+
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -27,6 +30,7 @@ export default function ListingForm() {
       toast.success("Listing created successfully.");
       queryClient.invalidateQueries({ queryKey: ["listings"] });
       reset();
+      router.push("/dashboard/listings");
     },
     onError: (error: Error) => toast.error(error.message),
   });

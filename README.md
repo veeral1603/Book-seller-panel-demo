@@ -3,6 +3,8 @@
 This is my submission for the internship assignment for the **Demo Seller Panel**.  
 It is a **multi-seller book portal** with a seller dashboard, authentication, and clean responsive UI.
 
+Test account:- email:- admin@admin.com, password:- admin1234
+
 ---
 
 ## 🛠 Tech Stack

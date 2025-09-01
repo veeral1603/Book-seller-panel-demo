@@ -24,6 +24,9 @@ export async function GET(request: NextRequest) {
       where: {
         sellerId: seller.sellerId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return NextResponse.json(
