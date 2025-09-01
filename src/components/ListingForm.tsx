@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Button from "./Button";
 import Image from "next/image";
 import { ListingType } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createListing } from "@/services/ListingService";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
@@ -19,10 +19,13 @@ export default function ListingForm() {
     reset,
   } = useForm<ListingType>();
 
+  const queryClient = useQueryClient();
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: ListingType) => createListing(data),
     onSuccess: () => {
       toast.success("Listing created successfully.");
+      // queryClient.invalidateQueries(["listings"]);
       reset();
     },
     onError: (error: Error) => toast.error(error.message),
